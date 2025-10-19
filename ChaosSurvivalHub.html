@@ -1,255 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Chaos Survival Hub</title>
-<style>
-body {
-    font-family: 'Courier New', monospace;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(120deg, #111, #222);
-    color: #0ff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-x: hidden;
-    animation: bgShift 10s infinite alternate;
-}
-
-@keyframes bgShift {
-    0% {background: linear-gradient(120deg, #111, #222);}
-    50% {background: linear-gradient(120deg, #111, #333);}
-    100% {background: linear-gradient(120deg, #222, #111);}
-}
-
-h1 {
-    font-size: 3em;
-    margin-top: 50px;
-    color: #f55;
-    text-shadow: 0 0 5px #f55, 0 0 15px #0ff, 0 0 30px #0ff;
-    opacity: 0;
-}
-
-.container {
-    width: 600px;
-    background: #222;
-    border: 2px solid #0ff;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px 0;
-    box-shadow: 0 0 20px #0ff;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1s, transform 1s;
-}
-
-.container.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-textarea, input {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    background: #111;
-    color: #0ff;
-    border: 1px solid #0ff;
-    border-radius: 5px;
-    font-family: monospace;
-    outline: none;
-}
-
-button {
-    padding: 10px;
-    margin-top: 5px;
-    width: 100%;
-    background: #f55;
-    color: #111;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    font-family: monospace;
-    box-shadow: 0 0 10px #f55;
-}
-
-button:hover {
-    background: #fff;
-    color: #f55;
-    box-shadow: 0 0 20px #f55, 0 0 30px #0ff;
-}
-
-ul {
-    list-style: none;
-    padding-left: 0;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-li {
-    padding: 8px;
-    border-bottom: 1px dotted #0ff;
-    animation: slideIn 0.5s ease;
-}
-
-@keyframes slideIn {
-    from {opacity: 0; transform: translateX(-20px);}
-    to {opacity: 1; transform: translateX(0);}
-}
-
-.commentSection {
-    margin-top: 5px;
-    padding-left: 15px;
-}
-
-.commentInput {
-    width: 80%;
-    display: inline-block;
-    margin-top: 5px;
-}
-
-.commentButton {
-    width: 18%;
-    display: inline-block;
-    margin-left: 2%;
-    margin-top: 5px;
-}
-
-#bottleMessage {
-    margin-top: 15px;
-    font-style: italic;
-    color: #ff0;
-    text-shadow: 0 0 10px #ff0;
-}
-
-#breakingNews {
-    width: 100%;
-    background: #f55;
-    color: #111;
-    padding: 10px;
-    text-align: center;
-    font-weight: bold;
-    overflow: hidden;
-    white-space: nowrap;
-    box-sizing: border-box;
-    animation: newsScroll 10s linear infinite;
-    display: none;
-}
-
-@keyframes newsScroll {
-    0% {transform: translateX(100%);}
-    100% {transform: translateX(-100%);}
-}
-</style>
-</head>
-<body>
-
-<h1 id="title"></h1>
-<div id="breakingNews">Breaking News: The world is ending… share your tips quickly!</div>
-
-<div class="container" id="mainContainer">
-    <input type="text" id="userName" placeholder="Your name (optional)">
-    <textarea id="tipInput" placeholder="Share your survival tip..."></textarea>
-    <button onclick="addTip()">Submit Tip</button>
-    <ul id="tipList"></ul>
-</div>
-
-<div class="container" id="bottleContainer">
-    <h3>Message in a Bottle</h3>
-    <p id="bottleMessage">Waiting for a random tip...</p>
-</div>
-
-<script>
-let tips = [];
-let breakingNewsArray = [
-    "Meteor shower incoming!",
-    "Mutant rats spotted in the city.",
-    "Water supplies running low.",
-    "Survivors gather at the old bunker.",
-    "Electric grids failing across the region."
-];
-
-// Breaking news update
-setInterval(() => {
-    const news = breakingNewsArray[Math.floor(Math.random() * breakingNewsArray.length)];
-    document.getElementById("breakingNews").textContent = news;
-}, 5000);
-
-// Typewriter effect for the title
-function typeTitle(text, i = 0) {
-    const title = document.getElementById("title");
-    if(i < text.length){
-        title.innerHTML += text.charAt(i);
-        title.style.opacity = 1;
-        setTimeout(()=>typeTitle(text, i+1), 100);
-    } else {
-        // Show main container after title animation
-        document.getElementById("mainContainer").classList.add("show");
-        document.getElementById("bottleContainer").classList.add("show");
-        document.getElementById("breakingNews").style.display = "block";
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareMate — Symptom Checker with Multilingual Chatbot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeSlideIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
+    .fade-slide-in {
+      opacity: 0;
+      animation: fadeSlideIn 1s ease forwards;
+    }
+    .fade-slide-in.delay-1 { animation-delay: 0.2s; }
+    .fade-slide-in.delay-2 { animation-delay: 0.4s; }
+    .fade-slide-in.delay-3 { animation-delay: 0.6s; }
+  </style>
+</head>
+<body class="bg-gray-50 font-poppins">
+
+<header class="bg-gradient-to-r from-teal-500 to-blue-500 text-white p-6 flex flex-wrap justify-between items-center shadow-md fade-slide-in delay-1">
+  <h1 class="text-3xl font-bold flex flex-col">
+    CareMate
+    <span class="text-sm text-teal-100 mt-1">Symptom Checker with Multilingual Chatbot</span>
+  </h1>
+  <nav class="flex flex-wrap gap-2 mt-2 md:mt-0">
+    <button onclick="showSection('home')" class="bg-white/20 px-4 py-2 rounded hover:bg-white hover:text-blue-700 transition">Home</button>
+    <button onclick="showSection('about')" class="bg-white/20 px-4 py-2 rounded hover:bg-white hover:text-blue-700 transition">About</button>
+    <button onclick="showSection('features')" class="bg-white/20 px-4 py-2 rounded hover:bg-white hover:text-blue-700 transition">Features</button>
+    <button onclick="showSection('team')" class="bg-white/20 px-4 py-2 rounded hover:bg-white hover:text-blue-700 transition">Team</button>
+    <button onclick="showSection('chatbot')" class="bg-white/20 px-4 py-2 rounded hover:bg-white hover:text-blue-700 transition">Chatbot</button>
+    <button onclick="showSection('contact')" class="bg-white/20 px-4 py-2 rounded hover:bg-white hover:text-blue-700 transition">Contact</button>
+  </nav>
+</header>
+
+<main class="max-w-6xl mx-auto my-12 px-4">
+  <!-- Sections here -->
+</main>
+
+<footer class="bg-gray-900 text-gray-300 text-center p-4 mt-10 fade-slide-in delay-1">
+  © 2025 CareMate — Symptom Checker with Multilingual Chatbot
+</footer>
+
+<script src="chatbot.js"></script>
+<script>
+function showSection(id) {
+  document.querySelectorAll('main section').forEach(s => s.classList.add('hidden'));
+  const section = document.getElementById(id);
+  section.classList.remove('hidden');
+  section.querySelectorAll('.fade-slide-in').forEach(el => el.style.animation = 'fadeSlideIn 1s ease forwards');
 }
-
-window.onload = () => {
-    typeTitle("💥 Chaos Survival Hub 💥");
-}
-
-// Add tip
-function addTip() {
-    const name = document.getElementById('userName').value.trim() || "Anonymous";
-    const content = document.getElementById('tipInput').value.trim();
-    if(content === "") return;
-    const tipObj = {name: name, content: content, comments: [], survive:0, die:0};
-    tips.push(tipObj);
-    document.getElementById('tipInput').value = "";
-    renderTips();
-}
-
-// Render tips
-function renderTips() {
-    const list = document.getElementById('tipList');
-    list.innerHTML = "";
-    tips.forEach((tip, idx) => {
-        const li = document.createElement('li');
-        li.innerHTML = `<strong>${tip.name}:</strong> ${tip.content} 
-        <button onclick="vote(${idx}, 'survive')">Survive (${tip.survive})</button>
-        <button onclick="vote(${idx}, 'die')">Die (${tip.die})</button>
-        <div class="commentSection">
-            ${tip.comments.map(c => `<div><strong>${c.name}:</strong> ${c.text}</div>`).join('')}
-            <input class="commentInput" id="commentInput${idx}" placeholder="Comment...">
-            <button class="commentButton" onclick="addComment(${idx})">Add</button>
-        </div>`;
-        list.appendChild(li);
-    });
-}
-
-// Voting
-function vote(idx, type){
-    if(type === 'survive') tips[idx].survive++;
-    else tips[idx].die++;
-    renderTips();
-}
-
-// Add comment
-function addComment(idx){
-    const input = document.getElementById(`commentInput${idx}`);
-    const text = input.value.trim();
-    if(text === "") return;
-    const name = prompt("Your name for comment (optional)") || "Anonymous";
-    tips[idx].comments.push({name: name, text: text});
-    input.value = "";
-    renderTips();
-}
-
-// Message in a bottle
-setInterval(() => {
-    if(tips.length === 0) return;
-    const randomTip = tips[Math.floor(Math.random() * tips.length)];
-    document.getElementById('bottleMessage').textContent = `${randomTip.name}: ${randomTip.content}`;
-}, 8000);
-
 </script>
 </body>
 </html>
